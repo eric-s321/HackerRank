@@ -7,6 +7,38 @@ typedef struct Node{
     struct Node *next;
 } Node;
 
+/*
+ * Insert Node at given position in the linked list.
+ * First element of linked list is at position 0.
+ */
+Node * insertNth(Node *head, int value, int position){
+
+    Node *newNode = (Node *) malloc(sizeof(Node));
+    newNode->data = value;
+
+    if(head == NULL && position != 0){
+        printf("Error. Can only insert at position 0 on an empty list.\n");
+        exit(EXIT_FAILURE);
+    }
+    if(head == NULL && position == 0){ //We are inserting into an empty linked list
+        newNode->next = NULL;
+        return newNode;    
+    }
+    if(head != NULL && position == 0){
+        newNode->next = head;
+        return newNode;
+    }
+    
+    Node *temp = head;
+    while(position > 1){
+        temp = temp->next;
+        position--;
+    }    
+    newNode->next = temp->next;
+    temp->next = newNode;
+    return head;
+}
+
 Node *insertAtHead(Node *head, int value){
     Node *newHead = (Node *) malloc(sizeof(Node));
     newHead->data = value;
@@ -57,7 +89,20 @@ int main(int argc, const char *argv[]){
 
     printList(head);
     
-    head = insertAtHead(head, 50);
+ //   head = insertAtHead(head, 50);
+//    head = insertNth(head, 4, 2);
+/*    3 0
+        5 1
+        4 2
+        2 3
+        10 1 */
+    head = insertNth(head, 3,0);
+    head = insertNth(head, 5,1);
+    head = insertNth(head, 4,2);
+    head = insertNth(head, 2,3);
+    head = insertNth(head, 10,1);
+
+
 
     printf("\n");
     printList(head);
