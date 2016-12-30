@@ -7,6 +7,12 @@ typedef struct Node{
     struct Node *next;
 } Node;
 
+Node *insertAtHead(Node *head, int value){
+    Node *newHead = (Node *) malloc(sizeof(Node));
+    newHead->data = value;
+    newHead->next = head;
+    return newHead;
+}
 
 Node * insertAtTail(Node *head, int value){
     if(head == NULL){ //value being passed in will be the Node at the head of the currently empty list
@@ -49,6 +55,11 @@ int main(int argc, const char *argv[]){
         head = insertAtTail(head, value);
     }
 
+    printList(head);
+    
+    head = insertAtHead(head, 50);
+
+    printf("\n");
     printList(head);
 
 }
