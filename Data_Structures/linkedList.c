@@ -73,6 +73,20 @@ void printList(Node *head){
     }
 }
 
+Node * deleteList(Node *head){
+    Node *temp = head;
+    Node *nextNode;
+
+    while(temp != NULL){
+        nextNode = temp->next;
+        free(temp);
+        temp = nextNode;
+    }
+
+    head = NULL;
+    return head;
+}
+
 int main(int argc, const char *argv[]){
     int listLength;
 
@@ -105,6 +119,11 @@ int main(int argc, const char *argv[]){
 
 
     printf("\n");
+    printList(head);
+
+    printf("\nDeleting list...\n");
+    head = deleteList(head);
+    printf("\nPrinting list..\n");
     printList(head);
 
 }
