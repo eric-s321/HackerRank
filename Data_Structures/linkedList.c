@@ -39,6 +39,30 @@ Node * insertNth(Node *head, int value, int position){
     return head;
 }
 
+/*
+ * Delete a Node at position in linked list
+ * List begins at position 0
+ * Assuming 0 < position < # elements in linked list
+ */
+Node * deleteNode(Node *head, int position){
+
+    if(position == 0){ //Deleting first element in list
+        Node *newHead = (Node *) malloc(sizeof(Node));
+        newHead = head->next;  //will return list starting at index 1
+        free(head);
+        return newHead;
+    }
+
+    Node *temp = head;
+    while(position - 1 > 0){ //traverse linked list until at Node before position.
+        temp = temp->next;
+        position--;
+    }
+    temp->next = temp->next->next; //Make Node before pos point to Node after pos.
+    free(temp->next);  //Free memory occupied by Node at position.
+    return head;
+}
+
 Node *insertAtHead(Node *head, int value){
     Node *newHead = (Node *) malloc(sizeof(Node));
     newHead->data = value;
@@ -73,6 +97,14 @@ void printList(Node *head){
     }
 }
 
+void reversePrint(Node *head){
+    if (head == NULL)
+        return;
+
+    reversePrint(head->next);
+    printf("%d\n", head->data); 
+}
+
 Node * deleteList(Node *head){
     Node *temp = head;
     Node *nextNode;
@@ -86,6 +118,7 @@ Node * deleteList(Node *head){
     head = NULL;
     return head;
 }
+
 
 int main(int argc, const char *argv[]){
     int listLength;
@@ -103,27 +136,25 @@ int main(int argc, const char *argv[]){
 
     printList(head);
     
- //   head = insertAtHead(head, 50);
-//    head = insertNth(head, 4, 2);
-/*    3 0
-        5 1
-        4 2
-        2 3
-        10 1 */
+    printf("\n");
+
+    reversePrint(head);
+
+/*
     head = insertNth(head, 3,0);
     head = insertNth(head, 5,1);
     head = insertNth(head, 4,2);
     head = insertNth(head, 2,3);
     head = insertNth(head, 10,1);
 
-
-
-    printf("\n");
-    printList(head);
-
     printf("\nDeleting list...\n");
     head = deleteList(head);
     printf("\nPrinting list..\n");
     printList(head);
+*/
+    
+
+
+
 
 }
