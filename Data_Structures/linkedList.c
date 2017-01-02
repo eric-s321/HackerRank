@@ -119,6 +119,19 @@ Node * deleteList(Node *head){
     return head;
 }
 
+void deleteListRef(Node **headRef){
+    Node *temp = *headRef;
+    Node *nextNode;
+
+    while(temp != NULL){
+        nextNode = temp->next;
+        free(temp);
+        temp = nextNode;
+    }
+
+    *headRef = NULL;
+}
+
 
 int main(int argc, const char *argv[]){
     int listLength;
@@ -135,10 +148,18 @@ int main(int argc, const char *argv[]){
     }
 
     printList(head);
-    
     printf("\n");
-
     reversePrint(head);
+
+//    head = deleteList(head);
+    deleteListRef(&head);
+
+    head = insertAtHead(head, 5);
+    printf("\n");
+    printList(head);
+
+//    head = deleteList(head);
+    deleteListRef(&head);
 
 /*
     head = insertNth(head, 3,0);
@@ -152,9 +173,4 @@ int main(int argc, const char *argv[]){
     printf("\nPrinting list..\n");
     printList(head);
 */
-    
-
-
-
-
 }
