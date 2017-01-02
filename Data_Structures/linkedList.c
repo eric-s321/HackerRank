@@ -105,6 +105,21 @@ void reversePrint(Node *head){
     printf("%d\n", head->data); 
 }
 
+Node * reverseList(Node *head){
+    Node *prevNode = NULL;
+    Node *currNode = head;
+    Node *nextNode = NULL;
+
+    while(currNode != NULL){
+        nextNode = currNode->next;
+        currNode->next = prevNode;
+        prevNode = currNode;
+        currNode = nextNode;
+    }
+
+    return prevNode;
+}
+
 Node * deleteList(Node *head){
     Node *temp = head;
     Node *nextNode;
@@ -148,9 +163,10 @@ int main(int argc, const char *argv[]){
     }
 
     printList(head);
+    head = reverseList(head); 
     printf("\n");
-    reversePrint(head);
-
+    printList(head);
+    
 //    head = deleteList(head);
     deleteListRef(&head);
 
