@@ -8,6 +8,30 @@ typedef struct Node{
 } Node;
 
 /*
+ * Check two linked lists for equality.  They are considered equal if 
+ * they have the same number of Nodes and the corresponding Nodes have 
+ * the same data.  This function returns 1 if the lists are equal and 0
+ * if they are not.
+ */
+int compareList(Node *headA, Node *headB){
+
+    if (headA == NULL && headB == NULL)
+        return 1;
+
+    while(headA != NULL && headB != NULL){
+        if(headA->data != headB->data)
+            return 0;
+        headA = headA->next;
+        headB = headB->next;
+    }
+    if(headA != NULL || headB != NULL) //The lists were a different length
+        return 0;
+
+    return 1;
+}
+
+
+/*
  * Insert Node at given position in the linked list.
  * First element of linked list is at position 0.
  */
@@ -156,37 +180,27 @@ int main(int argc, const char *argv[]){
 
     Node *head = NULL;  //initialize head of linked list to NULL
 
-    for (int i = 0; i < listLength; i++){  //Add data to linked list
+/*    for (int i = 0; i < listLength; i++){  //Add data to linked list
         int value;
         scanf("%d", &value); 
         head = insertAtTail(head, value);
     }
-
-    printList(head);
-    head = reverseList(head); 
-    printf("\n");
-    printList(head);
-    
-//    head = deleteList(head);
-    deleteListRef(&head);
-
-    head = insertAtHead(head, 5);
-    printf("\n");
-    printList(head);
-
-//    head = deleteList(head);
-    deleteListRef(&head);
-
-/*
-    head = insertNth(head, 3,0);
-    head = insertNth(head, 5,1);
-    head = insertNth(head, 4,2);
-    head = insertNth(head, 2,3);
-    head = insertNth(head, 10,1);
-
-    printf("\nDeleting list...\n");
-    head = deleteList(head);
-    printf("\nPrinting list..\n");
-    printList(head);
 */
+
+    Node *head2 = NULL;
+
+    head = insertAtTail(head, 5);
+    head = insertAtTail(head, -1);
+    head = insertAtTail(head, 1005);
+
+    head2 = insertAtTail(head2, 5);
+    head2 = insertAtTail(head2, -1);
+    head2 = insertAtTail(head2, 1005);
+
+
+    int equal = compareList(head,head2);
+    printf("Compare List returned %d\n", equal);
+
+    deleteListRef(&head);
+    deleteListRef(&head2);
 }
