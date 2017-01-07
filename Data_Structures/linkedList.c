@@ -8,6 +8,59 @@ typedef struct Node{
 } Node;
 
 /*
+ * Merge two linked lists into one linked list.
+ * Assumes the two lists passed in are in ascending order.
+ * Either list can be NULL
+ * Currently keeps duplicates.
+ */
+Node * mergeLists(Node *headA, Node *headB){
+
+    if (headA == NULL && headB == NULL)
+        return NULL;
+    else if (headA == NULL)
+        return headB;
+    else if (headB == NULL)
+        return headA;
+
+    Node *mergedList = NULL;
+
+    if (headA->data < headB->data){
+        mergedList = headA;
+        headA = headA->next;
+    }
+    else{
+        mergedList = headB;
+        headB = headB->next;
+    }
+
+    Node *temp = mergedList;
+    while(headA != NULL && headB != NULL){
+        if(headA->data < headB->data){
+            temp->next = headA;
+            headA = headA->next;
+            temp = temp->next;
+        }
+        else{
+            temp->next = headB;
+            headB = headB->next;
+            temp = temp->next;
+        }
+    }
+
+    while(headA != NULL){  //If list A was longer, get the rest
+        temp->next = headA;
+        headA = headA->next;
+        temp = temp->next;
+    }
+
+    while(headB != NULL){  //If list B was long, get the rest.
+        temp->next = headB;
+        headB = headB->next;
+        temp = temp->next;
+    }
+    return mergedList;
+}
+/*
  * Check two linked lists for equality.  They are considered equal if 
  * they have the same number of Nodes and the corresponding Nodes have 
  * the same data.  This function returns 1 if the lists are equal and 0
@@ -189,18 +242,24 @@ int main(int argc, const char *argv[]){
 
     Node *head2 = NULL;
 
-    head = insertAtTail(head, 5);
-    head = insertAtTail(head, -1);
-    head = insertAtTail(head, 1005);
+    head = insertAtTail(head, 2);
+    head = insertAtTail(head, 4);
+    head = insertAtTail(head, 6);
+    head = insertAtTail(head, 8);
 
+    head2 = insertAtTail(head2, 1);
+    head2 = insertAtTail(head2, 2);
+    head2 = insertAtTail(head2, 3);
     head2 = insertAtTail(head2, 5);
-    head2 = insertAtTail(head2, -1);
-    head2 = insertAtTail(head2, 1005);
 
 
-    int equal = compareList(head,head2);
-    printf("Compare List returned %d\n", equal);
+//    int equal = compareList(head,head2);
+//    printf("Compare List returned %d\n", equal);
 
-    deleteListRef(&head);
-    deleteListRef(&head2);
+    Node *mergedList = mergeLists(head, head2);
+    printList(mergedList);
+
+//    deleteListRef(&head);
+//    deleteListRef(&head2);
+    deleteListRef(&mergedList);
 }
